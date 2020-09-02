@@ -1,0 +1,1 @@
+https://www.entityframeworktutorial.net/EntityFramework5/spatial-datatype-in-entity-framework5.aspx

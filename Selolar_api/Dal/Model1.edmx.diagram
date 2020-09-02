@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ea6e6ecf13e94997b0f72a5bf5ed1e8c" Name="Diagram1">
+        <EntityTypeShape EntityType="SelolarNetworkModel.Antenna" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SelolarNetworkModel.cellphonedevice" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SelolarNetworkModel.CellPhoneDevice_ForNetworks" Width="1.5" PointX="6" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SelolarNetworkModel.cellphonedeviceCompany" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SelolarNetworkModel.cellphonedeviceForUser" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SelolarNetworkModel.Cellularnetwork" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SelolarNetworkModel.Location" Width="1.5" PointX="9.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SelolarNetworkModel.Recommendation" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SelolarNetworkModel.sysdiagram" Width="1.5" PointX="8.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SelolarNetworkModel.Userss" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
+        <AssociationConnector Association="SelolarNetworkModel.FK_Antennas_cellphonedeviceCompany" ManuallyRouted="false" />
+        <AssociationConnector Association="SelolarNetworkModel.FK_cellphonedevice_cellphonedeviceCompany" ManuallyRouted="false" />
+        <AssociationConnector Association="SelolarNetworkModel.FK_cellphonedeviceForUser_cellphonedevice" ManuallyRouted="false" />
+        <AssociationConnector Association="SelolarNetworkModel.FK_CellPhoneDevice_ForNetworks_cellphonedeviceCompany" ManuallyRouted="false" />
+        <AssociationConnector Association="SelolarNetworkModel.FK_CellPhoneDevice_ForNetworks_Cellularnetworks" ManuallyRouted="false" />
+        <AssociationConnector Association="SelolarNetworkModel.FK_Userss_cellphonedeviceForUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SelolarNetworkModel.FK_Locations_Userss" ManuallyRouted="false" />
+        <AssociationConnector Association="SelolarNetworkModel.FK_Userss_Recommendations" ManuallyRouted="false" />
+        <AssociationConnector Association="SelolarNetworkModel.FK_Userss_Recommendations1" ManuallyRouted="false" />
+        <AssociationConnector Association="SelolarNetworkModel.FK_Userss_Recommendations2" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

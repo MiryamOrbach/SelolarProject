@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SelolarNetworkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Antenna">
+    <Key>
+      <PropertyRef Name="antennaId" />
+    </Key>
+    <Property Name="antennaId" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="geographicallocation" Type="Geography" />
+    <Property Name="companyId" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="cellphonedeviceCompany" Relationship="Self.FK_Antennas_cellphonedeviceCompany" FromRole="Antennas" ToRole="cellphonedeviceCompany" />
+  </EntityType>
+  <EntityType Name="cellphonedevice">
+    <Key>
+      <PropertyRef Name="CellphonedeviceId" />
+    </Key>
+    <Property Name="CellphonedeviceId" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="companyId" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="modelName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="cellphonedeviceCompany" Relationship="Self.FK_cellphonedevice_cellphonedeviceCompany" FromRole="cellphonedevice" ToRole="cellphonedeviceCompany" />
+    <NavigationProperty Name="cellphonedeviceForUsers" Relationship="Self.FK_cellphonedeviceForUser_cellphonedevice" FromRole="cellphonedevice" ToRole="cellphonedeviceForUser" />
+  </EntityType>
+  <EntityType Name="CellPhoneDevice_ForNetworks">
+    <Key>
+      <PropertyRef Name="cellPhoneDeviceNetwork_Id" />
+    </Key>
+    <Property Name="cellPhoneDeviceNetwork_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="companyId" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="networkId" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="cellphonedeviceCompany" Relationship="Self.FK_CellPhoneDevice_ForNetworks_cellphonedeviceCompany" FromRole="CellPhoneDevice_ForNetworks" ToRole="cellphonedeviceCompany" />
+    <NavigationProperty Name="Cellularnetwork" Relationship="Self.FK_CellPhoneDevice_ForNetworks_Cellularnetworks" FromRole="CellPhoneDevice_ForNetworks" ToRole="Cellularnetworks" />
+  </EntityType>
+  <EntityType Name="cellphonedeviceCompany">
+    <Key>
+      <PropertyRef Name="companyId" />
+    </Key>
+    <Property Name="companyId" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="companyName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Antennas" Relationship="Self.FK_Antennas_cellphonedeviceCompany" FromRole="cellphonedeviceCompany" ToRole="Antennas" />
+    <NavigationProperty Name="cellphonedevices" Relationship="Self.FK_cellphonedevice_cellphonedeviceCompany" FromRole="cellphonedeviceCompany" ToRole="cellphonedevice" />
+    <NavigationProperty Name="CellPhoneDevice_ForNetworks" Relationship="Self.FK_CellPhoneDevice_ForNetworks_cellphonedeviceCompany" FromRole="cellphonedeviceCompany" ToRole="CellPhoneDevice_ForNetworks" />
+  </EntityType>
+  <EntityType Name="cellphonedeviceForUser">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CellphonedeviceId" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="cellphonedevice" Relationship="Self.FK_cellphonedeviceForUser_cellphonedevice" FromRole="cellphonedeviceForUser" ToRole="cellphonedevice" />
+    <NavigationProperty Name="Userss" Relationship="Self.FK_Userss_cellphonedeviceForUser" FromRole="cellphonedeviceForUser" ToRole="Userss" />
+  </EntityType>
+  <EntityType Name="Cellularnetwork">
+    <Key>
+      <PropertyRef Name="networkId" />
+    </Key>
+    <Property Name="networkId" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="networkName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="CellPhoneDevice_ForNetworks" Relationship="Self.FK_CellPhoneDevice_ForNetworks_Cellularnetworks" FromRole="Cellularnetworks" ToRole="CellPhoneDevice_ForNetworks" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="locationId" />
+    </Key>
+    <Property Name="locationId" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="geographicallocation" Type="Geography" />
+    <Property Name="userId" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="durationoftheday" Type="Int32" />
+    <NavigationProperty Name="Userss" Relationship="Self.FK_Locations_Userss" FromRole="Locations" ToRole="Userss" />
+  </EntityType>
+  <EntityType Name="Recommendation">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="recommendationDate" Type="DateTime" Precision="0" />
+    <Property Name="cellularnetworkId" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="locationId" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="CellphonedeviceId" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Userss" Relationship="Self.FK_Userss_Recommendations" FromRole="Recommendations" ToRole="Userss" />
+    <NavigationProperty Name="Userss1" Relationship="Self.FK_Userss_Recommendations1" FromRole="Recommendations" ToRole="Userss" />
+    <NavigationProperty Name="Userss2" Relationship="Self.FK_Userss_Recommendations2" FromRole="Recommendations" ToRole="Userss" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Userss">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="username" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="passw" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="cellphonedeviceForUser" Relationship="Self.FK_Userss_cellphonedeviceForUser" FromRole="Userss" ToRole="cellphonedeviceForUser" />
+    <NavigationProperty Name="Locations" Relationship="Self.FK_Locations_Userss" FromRole="Userss" ToRole="Locations" />
+    <NavigationProperty Name="Recommendation" Relationship="Self.FK_Userss_Recommendations" FromRole="Userss" ToRole="Recommendations" />
+    <NavigationProperty Name="Recommendation1" Relationship="Self.FK_Userss_Recommendations1" FromRole="Userss" ToRole="Recommendations" />
+    <NavigationProperty Name="Recommendation2" Relationship="Self.FK_Userss_Recommendations2" FromRole="Userss" ToRole="Recommendations" />
+  </EntityType>
+  <Association Name="FK_Antennas_cellphonedeviceCompany">
+    <End Role="cellphonedeviceCompany" Type="Self.cellphonedeviceCompany" Multiplicity="0..1" />
+    <End Role="Antennas" Type="Self.Antenna" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cellphonedeviceCompany">
+        <PropertyRef Name="companyId" />
+      </Principal>
+      <Dependent Role="Antennas">
+        <PropertyRef Name="companyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_cellphonedevice_cellphonedeviceCompany">
+    <End Role="cellphonedeviceCompany" Type="Self.cellphonedeviceCompany" Multiplicity="0..1" />
+    <End Role="cellphonedevice" Type="Self.cellphonedevice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cellphonedeviceCompany">
+        <PropertyRef Name="companyId" />
+      </Principal>
+      <Dependent Role="cellphonedevice">
+        <PropertyRef Name="companyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_cellphonedeviceForUser_cellphonedevice">
+    <End Role="cellphonedevice" Type="Self.cellphonedevice" Multiplicity="0..1" />
+    <End Role="cellphonedeviceForUser" Type="Self.cellphonedeviceForUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cellphonedevice">
+        <PropertyRef Name="CellphonedeviceId" />
+      </Principal>
+      <Dependent Role="cellphonedeviceForUser">
+        <PropertyRef Name="CellphonedeviceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CellPhoneDevice_ForNetworks_cellphonedeviceCompany">
+    <End Role="cellphonedeviceCompany" Type="Self.cellphonedeviceCompany" Multiplicity="1" />
+    <End Role="CellPhoneDevice_ForNetworks" Type="Self.CellPhoneDevice_ForNetworks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cellphonedeviceCompany">
+        <PropertyRef Name="companyId" />
+      </Principal>
+      <Dependent Role="CellPhoneDevice_ForNetworks">
+        <PropertyRef Name="companyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CellPhoneDevice_ForNetworks_Cellularnetworks">
+    <End Role="Cellularnetworks" Type="Self.Cellularnetwork" Multiplicity="1" />
+    <End Role="CellPhoneDevice_ForNetworks" Type="Self.CellPhoneDevice_ForNetworks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cellularnetworks">
+        <PropertyRef Name="networkId" />
+      </Principal>
+      <Dependent Role="CellPhoneDevice_ForNetworks">
+        <PropertyRef Name="networkId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Userss_cellphonedeviceForUser">
+    <End Role="cellphonedeviceForUser" Type="Self.cellphonedeviceForUser" Multiplicity="1" />
+    <End Role="Userss" Type="Self.Userss" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="cellphonedeviceForUser">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Userss">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Locations_Userss">
+    <End Role="Userss" Type="Self.Userss" Multiplicity="0..1" />
+    <End Role="Locations" Type="Self.Location" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Userss">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Locations">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Userss_Recommendations">
+    <End Role="Recommendations" Type="Self.Recommendation" Multiplicity="1" />
+    <End Role="Userss" Type="Self.Userss" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Recommendations">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Userss">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Userss_Recommendations1">
+    <End Role="Recommendations" Type="Self.Recommendation" Multiplicity="1" />
+    <End Role="Userss" Type="Self.Userss" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Recommendations">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Userss">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Userss_Recommendations2">
+    <End Role="Recommendations" Type="Self.Recommendation" Multiplicity="1" />
+    <End Role="Userss" Type="Self.Userss" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Recommendations">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Userss">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SelolarNetworkEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Antennas" EntityType="Self.Antenna" />
+    <EntitySet Name="cellphonedevices" EntityType="Self.cellphonedevice" />
+    <EntitySet Name="CellPhoneDevice_ForNetworks" EntityType="Self.CellPhoneDevice_ForNetworks" />
+    <EntitySet Name="cellphonedeviceCompanies" EntityType="Self.cellphonedeviceCompany" />
+    <EntitySet Name="cellphonedeviceForUsers" EntityType="Self.cellphonedeviceForUser" />
+    <EntitySet Name="Cellularnetworks" EntityType="Self.Cellularnetwork" />
+    <EntitySet Name="Locations" EntityType="Self.Location" />
+    <EntitySet Name="Recommendations" EntityType="Self.Recommendation" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Usersses" EntityType="Self.Userss" />
+    <AssociationSet Name="FK_Antennas_cellphonedeviceCompany" Association="Self.FK_Antennas_cellphonedeviceCompany">
+      <End Role="cellphonedeviceCompany" EntitySet="cellphonedeviceCompanies" />
+      <End Role="Antennas" EntitySet="Antennas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_cellphonedevice_cellphonedeviceCompany" Association="Self.FK_cellphonedevice_cellphonedeviceCompany">
+      <End Role="cellphonedeviceCompany" EntitySet="cellphonedeviceCompanies" />
+      <End Role="cellphonedevice" EntitySet="cellphonedevices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_cellphonedeviceForUser_cellphonedevice" Association="Self.FK_cellphonedeviceForUser_cellphonedevice">
+      <End Role="cellphonedevice" EntitySet="cellphonedevices" />
+      <End Role="cellphonedeviceForUser" EntitySet="cellphonedeviceForUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CellPhoneDevice_ForNetworks_cellphonedeviceCompany" Association="Self.FK_CellPhoneDevice_ForNetworks_cellphonedeviceCompany">
+      <End Role="cellphonedeviceCompany" EntitySet="cellphonedeviceCompanies" />
+      <End Role="CellPhoneDevice_ForNetworks" EntitySet="CellPhoneDevice_ForNetworks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CellPhoneDevice_ForNetworks_Cellularnetworks" Association="Self.FK_CellPhoneDevice_ForNetworks_Cellularnetworks">
+      <End Role="Cellularnetworks" EntitySet="Cellularnetworks" />
+      <End Role="CellPhoneDevice_ForNetworks" EntitySet="CellPhoneDevice_ForNetworks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Userss_cellphonedeviceForUser" Association="Self.FK_Userss_cellphonedeviceForUser">
+      <End Role="cellphonedeviceForUser" EntitySet="cellphonedeviceForUsers" />
+      <End Role="Userss" EntitySet="Usersses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Locations_Userss" Association="Self.FK_Locations_Userss">
+      <End Role="Userss" EntitySet="Usersses" />
+      <End Role="Locations" EntitySet="Locations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Userss_Recommendations" Association="Self.FK_Userss_Recommendations">
+      <End Role="Recommendations" EntitySet="Recommendations" />
+      <End Role="Userss" EntitySet="Usersses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Userss_Recommendations1" Association="Self.FK_Userss_Recommendations1">
+      <End Role="Recommendations" EntitySet="Recommendations" />
+      <End Role="Userss" EntitySet="Usersses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Userss_Recommendations2" Association="Self.FK_Userss_Recommendations2">
+      <End Role="Recommendations" EntitySet="Recommendations" />
+      <End Role="Userss" EntitySet="Usersses" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

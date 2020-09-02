@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SelolarNetworkModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Antennas">
+    <Key>
+      <PropertyRef Name="antennaId" />
+    </Key>
+    <Property Name="antennaId" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="geographicallocation" Type="geography" />
+    <Property Name="companyId" Type="nvarchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="cellphonedevice">
+    <Key>
+      <PropertyRef Name="CellphonedeviceId" />
+    </Key>
+    <Property Name="CellphonedeviceId" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="companyId" Type="nvarchar" MaxLength="25" />
+    <Property Name="modelName" Type="nvarchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="CellPhoneDevice_ForNetworks">
+    <Key>
+      <PropertyRef Name="cellPhoneDeviceNetwork_Id" />
+    </Key>
+    <Property Name="cellPhoneDeviceNetwork_Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="companyId" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="networkId" Type="nvarchar" MaxLength="25" Nullable="false" />
+  </EntityType>
+  <EntityType Name="cellphonedeviceCompany">
+    <Key>
+      <PropertyRef Name="companyId" />
+    </Key>
+    <Property Name="companyId" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="companyName" Type="nvarchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="cellphonedeviceForUser">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="CellphonedeviceId" Type="nvarchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="Cellularnetworks">
+    <Key>
+      <PropertyRef Name="networkId" />
+    </Key>
+    <Property Name="networkId" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="networkName" Type="nvarchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="Locations">
+    <Key>
+      <PropertyRef Name="locationId" />
+    </Key>
+    <Property Name="locationId" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="geographicallocation" Type="geography" />
+    <Property Name="userId" Type="nvarchar" MaxLength="25" />
+    <Property Name="durationoftheday" Type="int" />
+  </EntityType>
+  <EntityType Name="Recommendations">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="recommendationDate" Type="date" />
+    <Property Name="cellularnetworkId" Type="nvarchar" MaxLength="25" />
+    <Property Name="locationId" Type="nvarchar" MaxLength="25" />
+    <Property Name="CellphonedeviceId" Type="nvarchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Userss">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="username" Type="nvarchar" MaxLength="30" />
+    <Property Name="passw" Type="nvarchar" MaxLength="15" />
+  </EntityType>
+  <Association Name="FK_Antennas_cellphonedeviceCompany">
+    <End Role="cellphonedeviceCompany" Type="Self.cellphonedeviceCompany" Multiplicity="0..1" />
+    <End Role="Antennas" Type="Self.Antennas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cellphonedeviceCompany">
+        <PropertyRef Name="companyId" />
+      </Principal>
+      <Dependent Role="Antennas">
+        <PropertyRef Name="companyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_cellphonedevice_cellphonedeviceCompany">
+    <End Role="cellphonedeviceCompany" Type="Self.cellphonedeviceCompany" Multiplicity="0..1" />
+    <End Role="cellphonedevice" Type="Self.cellphonedevice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cellphonedeviceCompany">
+        <PropertyRef Name="companyId" />
+      </Principal>
+      <Dependent Role="cellphonedevice">
+        <PropertyRef Name="companyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CellPhoneDevice_ForNetworks_cellphonedeviceCompany">
+    <End Role="cellphonedeviceCompany" Type="Self.cellphonedeviceCompany" Multiplicity="1" />
+    <End Role="CellPhoneDevice_ForNetworks" Type="Self.CellPhoneDevice_ForNetworks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cellphonedeviceCompany">
+        <PropertyRef Name="companyId" />
+      </Principal>
+      <Dependent Role="CellPhoneDevice_ForNetworks">
+        <PropertyRef Name="companyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CellPhoneDevice_ForNetworks_Cellularnetworks">
+    <End Role="Cellularnetworks" Type="Self.Cellularnetworks" Multiplicity="1" />
+    <End Role="CellPhoneDevice_ForNetworks" Type="Self.CellPhoneDevice_ForNetworks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cellularnetworks">
+        <PropertyRef Name="networkId" />
+      </Principal>
+      <Dependent Role="CellPhoneDevice_ForNetworks">
+        <PropertyRef Name="networkId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_cellphonedeviceForUser_cellphonedevice">
+    <End Role="cellphonedevice" Type="Self.cellphonedevice" Multiplicity="0..1" />
+    <End Role="cellphonedeviceForUser" Type="Self.cellphonedeviceForUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cellphonedevice">
+        <PropertyRef Name="CellphonedeviceId" />
+      </Principal>
+      <Dependent Role="cellphonedeviceForUser">
+        <PropertyRef Name="CellphonedeviceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Locations_Userss">
+    <End Role="Userss" Type="Self.Userss" Multiplicity="0..1" />
+    <End Role="Locations" Type="Self.Locations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Userss">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Locations">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SelolarNetworkModel1StoreContainer">
+    <EntitySet Name="Antennas" EntityType="Self.Antennas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="cellphonedevice" EntityType="Self.cellphonedevice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CellPhoneDevice_ForNetworks" EntityType="Self.CellPhoneDevice_ForNetworks" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="cellphonedeviceCompany" EntityType="Self.cellphonedeviceCompany" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="cellphonedeviceForUser" EntityType="Self.cellphonedeviceForUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cellularnetworks" EntityType="Self.Cellularnetworks" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Recommendations" EntityType="Self.Recommendations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Userss" EntityType="Self.Userss" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Antennas_cellphonedeviceCompany" Association="Self.FK_Antennas_cellphonedeviceCompany">
+      <End Role="cellphonedeviceCompany" EntitySet="cellphonedeviceCompany" />
+      <End Role="Antennas" EntitySet="Antennas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_cellphonedevice_cellphonedeviceCompany" Association="Self.FK_cellphonedevice_cellphonedeviceCompany">
+      <End Role="cellphonedeviceCompany" EntitySet="cellphonedeviceCompany" />
+      <End Role="cellphonedevice" EntitySet="cellphonedevice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CellPhoneDevice_ForNetworks_cellphonedeviceCompany" Association="Self.FK_CellPhoneDevice_ForNetworks_cellphonedeviceCompany">
+      <End Role="cellphonedeviceCompany" EntitySet="cellphonedeviceCompany" />
+      <End Role="CellPhoneDevice_ForNetworks" EntitySet="CellPhoneDevice_ForNetworks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CellPhoneDevice_ForNetworks_Cellularnetworks" Association="Self.FK_CellPhoneDevice_ForNetworks_Cellularnetworks">
+      <End Role="Cellularnetworks" EntitySet="Cellularnetworks" />
+      <End Role="CellPhoneDevice_ForNetworks" EntitySet="CellPhoneDevice_ForNetworks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_cellphonedeviceForUser_cellphonedevice" Association="Self.FK_cellphonedeviceForUser_cellphonedevice">
+      <End Role="cellphonedevice" EntitySet="cellphonedevice" />
+      <End Role="cellphonedeviceForUser" EntitySet="cellphonedeviceForUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Locations_Userss" Association="Self.FK_Locations_Userss">
+      <End Role="Userss" EntitySet="Userss" />
+      <End Role="Locations" EntitySet="Locations" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
